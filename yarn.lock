@@ -830,10 +830,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@haystackjs/journey@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@haystackjs/journey/-/journey-1.3.0.tgz#ba51b59ebcf0cc672bef7f856c219d98aec95721"
-  integrity sha512-B/0HEYQHwhQzxXjs9Ee/AiyWMajQYuod+jsJ+lftcoejTcuNyJjEiWCErNKLv7marmdJhSYuMZpwfzpdSqtI8g==
+"@haystackjs/journey@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@haystackjs/journey/-/journey-1.4.0.tgz#ff71179f37f3ce7b3c147a3683b1bf8855a9cf74"
+  integrity sha512-vWnl58yWtQnF/RjHfHTW8fkRX6Ux15tIpy80HmR5dpqXIQcRvyOQ4QbIe3daPOSM/uKDlpmXaYqEJCW0vEQyIA==
   dependencies:
     "@babel/core" "^7.8.4"
     "@babel/plugin-proposal-class-properties" "^7.8.3"

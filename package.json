@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "journey dev sample"
+    "dev": "journey dev sample",
+    "export": "journey export sample"
   },
   "devDependencies": {
-    "@haystackjs/journey": "1.3.0",
+    "@haystackjs/journey": "1.4.0",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
     "react": "^16.12.0",
