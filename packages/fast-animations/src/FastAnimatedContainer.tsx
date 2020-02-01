@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { css, keyframes } from 'glamor';
 import { capabilities } from './capabilities';
 
 const passthroughWorklet = `
@@ -18,9 +19,48 @@ if (capabilities.workletSupported) {
     });
 }
 
+// Stylesheet
+let styleElement: HTMLStyleElement;
+function getStyleSheet() {
+    if (styleElement) {
+        return styleElement.sheet! as CSSStyleSheet;
+    }
+    styleElement = document.createElement('style');
+    document.head.appendChild(styleElement);
+    return styleElement.sheet! as CSSStyleSheet;
+}
+
+const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function randomKey() {
+    let r = '';
+    for (let i = 0; i < 10; i++) {
+        r += letters[Math.floor(Math.random() * (letters.length - 1))];
+    }
+    return r;
+}
+
+let keyframesCache = new Map<string, string>();
+function getKeyframes(fromX: number, fromY: number, toX: number, toY: number) {
+    let key = `kf-${fromX}-${fromY}-${toX}-${toY}`;
+    if (keyframesCache.has(key)) {
+        return keyframesCache.get(key)!;
+    }
+    let id = 'fa-kf-' + randomKey();
+    let styleSheet = getStyleSheet();
+    let rule = `
+        @keyframes ${id} {
+            from { transform: translate(${fromX}px,${fromY}px); }
+            to { transform: translate(${toX}px,${toY}px); }
+        }
+    `;
+    styleSheet.insertRule(rule, styleSheet.cssRules.length);
+    keyframesCache.set(key, id);
+    return id;
+}
+
 export interface FastAnimatedContainerProps {
     className?: string;
-    mode?: 'adaptive' | 'css-property' | 'web-animations' | 'animation-worklet';
+    mode?: 'adaptive' | 'css-property' | 'css-animations' | 'web-animations' | 'animation-worklet';
     children?: any;
     easing?: string;
     duration?: number;
@@ -31,21 +71,24 @@ export interface FastAnimatedContainerProps {
 export const FastAnimatedContainer = React.memo((props: FastAnimatedContainerProps) => {
 
     // Resolve Mode
-    let mode: 'css-property' | 'web-animations' | 'animation-worklet' = 'css-property';
+    let mode: 'css-property' | 'web-animations' | 'animation-worklet' | 'css-animations' = 'css-property';
     if (props.mode === 'web-animations') {
         mode = 'web-animations';
     }
     if (props.mode === 'animation-worklet') {
         mode = 'animation-worklet';
     }
+    if (props.mode === 'css-animations') {
+        mode = 'css-animations';
+    }
     if (!props.mode || props.mode === 'adaptive') {
         if (capabilities.workletSupported) {
             mode = 'animation-worklet';
         } else {
             const isChrome = window && !!(window as any).chrome && (!!(window as any).chrome.webstore || !!(window as any).chrome.runtime);
-            if (isChrome && capabilities.waapiSupported) {
-                // For chrome we need to use Web Animations API
-                mode = 'web-animations';
+            if (isChrome) {
+                // For chrome we need to use CSS animations
+                mode = 'css-animations';
             } else {
                 // For anything else we are ok to use css property animations
                 mode = 'css-property';
@@ -62,7 +105,8 @@ export const FastAnimatedContainer = React.memo((props: FastAnimatedContainerPro
     let duration = props.duration || 240;
 
     // Web Animations Implementation
-    if ((mode === 'web-animations' && capabilities.waapiSupported) || (mode === 'animation-worklet' && capabilities.workletSupported)) {
+    if ((mode === 'web-animations' && capabilities.waapiSupported)
+        || (mode === 'animation-worklet' && capabilities.workletSupported)) {
         let ref = React.useRef<HTMLDivElement>(null);
         let initialX = React.useMemo(() => props.translateX || 0, []);
         let initialY = React.useMemo(() => props.translateY || 0, []);
@@ -114,6 +158,39 @@ export const FastAnimatedContainer = React.memo((props: FastAnimatedContainerPro
                 ref={ref}
                 className={props.className}
                 style={{
+                    willChange: 'transform',
+                    transform: `translate(${initialX}px,${initialY}px)`
+                }}
+            >
+                {props.children}
+            </div>
+        );
+    }
+
+    if (mode === 'css-animations') {
+        let ref = React.useRef<HTMLDivElement>(null);
+        let tx = props.translateX || 0;
+        let ty = props.translateY || 0;
+        let initialX = React.useMemo(() => tx, []);
+        let initialY = React.useMemo(() => ty, []);
+        let currentX = React.useRef(initialX);
+        let currentY = React.useRef(initialY);
+
+        // Calculate Animation
+        let aniamtionKf = React.useRef<string | undefined>(undefined);
+        if (currentX.current !== tx || currentY.current !== ty) {
+            let kf = getKeyframes(currentX.current, currentY.current, tx, ty);
+            aniamtionKf.current = kf;
+            currentX.current = tx;
+            currentY.current = ty;
+        }
+
+        return (
+            <div
+                ref={ref}
+                className={props.className}
+                style={{
+                    animation: aniamtionKf.current ? `${aniamtionKf.current} ${duration}ms ${easing} forwards` : undefined,
                     willChange: 'transform',
                     transform: `translate(${initialX}px,${initialY}px)`
                 }}
