@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { XView } from 'react-mental';
 // import foo from './logo.png';
-import { FastAnimatedContainer } from 'fast-animations';
+import { FastAnimatedContainer, capabilities } from 'fast-animations';
 
 const HeavyElement = React.memo(() => {
     let children: any[] = [];
     for (let i = 0; i < 10000; i++) {
-        children.push((<XView width={1} height={1} backgroundColor={i % 2 === 0 ? 'blue' : 'green'} />));
+        children.push((<XView key={'k-' + i} width={1} height={1} backgroundColor={i % 2 === 0 ? 'blue' : 'green'} />));
     }
     return (
         <XView
@@ -84,8 +84,10 @@ export const AnimationTestPage = React.memo(() => {
                         </XView>
                     </XView>
 
-                    <XView flexDirection="row" height={48} alignItems="center">
+                    <XView flexDirection="column" height={64} alignItems="flex-start" justifyContent="center">
                         <span>Current Mode: {animationMode}</span>
+                        <span>WAAPI Supported: {'' + capabilities.waapiSupported}</span>
+                        <span>Worklet Animations Supported: {'' + capabilities.workletSupported}</span>
                     </XView>
 
                     <XView flexDirection="row" height={48} alignItems="center">
