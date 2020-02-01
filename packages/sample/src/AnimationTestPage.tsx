@@ -44,7 +44,7 @@ export const AnimationTestPage = React.memo(() => {
         });
         setTimeout(() => {
             let start = Date.now();
-            while (Date.now() - start < 250) {
+            while (Date.now() - start < 450) {
                 ;
             }
         }, 100);
@@ -112,7 +112,6 @@ export const AnimationTestPage = React.memo(() => {
                             duration={100}
                         >
                             {mode && <XView
-                                as="img"
                                 width={100}
                                 height={100}
                                 // src={foo}

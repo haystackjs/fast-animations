@@ -51,11 +51,11 @@ export const FastAnimatedContainer = React.memo((props: FastAnimatedContainerPro
             if (currentX.current !== tx || currentY.current !== ty) {
                 ref.current!.animate([
                     {
-                        transform: `translateX(${currentX.current}px)`
+                        transform: `translate(${currentX.current}px,${currentY.current}px)`
                     }, {
-                        transform: `translateX(${tx}px)`
+                        transform: `translate(${tx}px,${ty}px)`
                     }
-                ], { duration: duration, fill: 'forwards', composite: 'add', easing: easing });
+                ], { duration: duration, fill: 'forwards', easing: easing });
 
                 currentX.current = tx;
                 currentY.current = ty;
