@@ -1,5 +1,12 @@
 <html>
 <body>
     <div id="root"></div>
+    <script language="javascript+animationworklet">
+        registerAnimator('passthrough', class {
+            animate(currentTime, effect) {
+                effect.localTime = currentTime;
+            }
+        });
+    </script>
 </body>
 </html>

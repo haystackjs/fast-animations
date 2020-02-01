@@ -21,7 +21,7 @@ const HeavyElement = React.memo(() => {
 });
 
 export const AnimationTestPage = React.memo(() => {
-    const [animationMode, setAnimationMode] = React.useState<'adaptive' | 'css-property' | 'web-animations'>('adaptive');
+    const [animationMode, setAnimationMode] = React.useState<'adaptive' | 'css-property' | 'web-animations' | 'animation-worklet'>('adaptive');
     const [offset, setOffset] = React.useState(0);
     const [mode, setMode] = React.useState(false);
     const startAnimation = React.useCallback(() => {
@@ -92,6 +92,7 @@ export const AnimationTestPage = React.memo(() => {
                         <button onClick={() => setAnimationMode('adaptive')}>Adaptive</button>
                         <button onClick={() => setAnimationMode('css-property')}>CSS Properties</button>
                         <button onClick={() => setAnimationMode('web-animations')}>Web Animations API</button>
+                        <button onClick={() => setAnimationMode('animation-worklet')}>Worklet API</button>
                     </XView>
 
                     <XView flexDirection="row" height={48} alignItems="center">
@@ -106,7 +107,7 @@ export const AnimationTestPage = React.memo(() => {
                         key={animationMode}
                     >
                         <FastAnimatedContainer
-                            mode={animationMode} 
+                            mode={animationMode}
                             translateX={offset}
                             easing={'cubic-bezier(0.4, 0.0, 0.2, 1)'}
                             duration={100}
