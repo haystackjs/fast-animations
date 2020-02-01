@@ -1,0 +1,1 @@
+export { FastAnimatedContainer } from './src/FastAnimatedContainer';
