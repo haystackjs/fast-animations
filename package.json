@@ -6,7 +6,8 @@
     "dev": "journey dev sample",
     "build": "journey build",
     "clean": "journey clean",
-    "export": "journey export sample"
+    "export": "journey export sample",
+    "release": "yarn build && cd ./packages/fast-animations && npm publish"
   },
   "devDependencies": {
     "@haystackjs/journey": "2.0.0",

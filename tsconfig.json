@@ -24,7 +24,6 @@
         ],
         "resolveJsonModule": true,
         "importHelpers": false,
-        "composite": true,
         "esModuleInterop": true,
         "declaration": true,
         "outDir": "./output",
