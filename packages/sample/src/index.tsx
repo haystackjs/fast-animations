@@ -21,7 +21,7 @@ css.global('html', {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AnimationTestPage } from './src/AnimationTestPage';
+import { AnimationTestPage } from './AnimationTestPage';
 
 //
 // Render

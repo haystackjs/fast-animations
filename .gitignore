@@ -1,3 +1,6 @@
 old
 node_modules
 dist
+output
+packages/fast-animations/lib
+packages/sample/lib

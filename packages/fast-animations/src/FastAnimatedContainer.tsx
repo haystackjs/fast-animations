@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { css, keyframes } from 'glamor';
 import { capabilities } from './capabilities';
 
 const passthroughWorklet = `
