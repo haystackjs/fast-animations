@@ -1,4 +1,8 @@
+const hasDom = !!(typeof window !== 'undefined' &&
+    window.document &&
+    window.document.createElement);
+
 export const capabilities = {
-    workletSupported: !!window && ('animationWorklet' in CSS),
-    waapiSupported: !!window && ('animate' in document.createElement('div'))
+    workletSupported: hasDom && ('animationWorklet' in CSS),
+    waapiSupported: hasDom && ('animate' in document.createElement('div'))
 };
