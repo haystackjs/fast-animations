@@ -202,6 +202,7 @@ export const FastAnimatedContainer = React.memo((props: FastAnimatedContainerPro
     // Css Property Animations Implementation
     return (
         <div
+            className={props.className}
             style={{
                 willChange: 'transform',
                 transition: 'transform ' + duration + 'ms ' + easing,
