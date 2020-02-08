@@ -1,33 +1,7 @@
 {
+    "extends": "journey-tsconfig/journey-tsconfig.json",
     "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "lib": [
-            "es6",
-            "dom"
-        ],
-        "sourceMap": true,
-        "allowJs": false,
-        "jsx": "react",
-        "moduleResolution": "node",
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": false,
-        "allowSyntheticDefaultImports": true,
-        "strictPropertyInitialization": true,
-        "typeRoots": [
-            "./node_modules/@types"
-        ],
-        "resolveJsonModule": true,
-        "importHelpers": false,
-        "esModuleInterop": true,
-        "declaration": true,
-        "outDir": "./output",
-        "baseUrl": "./packages",
+        "baseUrl": "packages",
         "paths": {
             "sample": [
                 "sample/src"

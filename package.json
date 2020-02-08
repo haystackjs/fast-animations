@@ -10,14 +10,13 @@
     "release": "yarn build && cd ./packages/fast-animations && yarn publish"
   },
   "devDependencies": {
-    "@haystackjs/journey": "2.0.0",
+    "@haystackjs/journey": "2.2.0",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "css-loader": "^3.4.2",
     "glamor": "^2.20.40",
     "normalize.css": "^8.0.1",
     "react-mental": "^1.5.0",
